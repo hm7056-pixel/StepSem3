@@ -1,0 +1,75 @@
+import java.util.Scanner;
+
+public class RotateArray {
+
+    static int[] rotateArray(int[] nums, int k) {
+
+        if (nums.length == 0) {
+            return nums;
+        }
+
+        k = k % nums.length;
+
+        int[] rotatedArray = new int[nums.length];
+
+        for (int i = 0; i < nums.length; i++) {
+
+            int newPosition =
+                    (i + k) % nums.length;
+
+            rotatedArray[newPosition] = nums[i];
+        }
+
+        return rotatedArray;
+    }
+
+    static void printArray(int[] array) {
+
+        System.out.print("Rotated Array: ");
+
+        for (int i = 0; i < array.length; i++) {
+
+            System.out.print(array[i]);
+
+            if (i < array.length - 1) {
+                System.out.print(" ");
+            }
+        }
+
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+
+        try {
+            System.out.print("Enter array size: ");
+            int size = scanner.nextInt();
+
+            if (size <= 0) {
+                System.out.println("Array size must be positive.");
+                return;
+            }
+
+            int[] nums = new int[size];
+
+            System.out.println("Enter array elements:");
+
+            for (int i = 0; i < nums.length; i++) {
+                nums[i] = scanner.nextInt();
+            }
+
+            System.out.print("Enter number of rotations: ");
+            int k = scanner.nextInt();
+
+            int[] rotatedArray =
+                    rotateArray(nums, k);
+
+            printArray(rotatedArray);
+
+        } finally {
+            scanner.close();
+        }
+    }
+}
