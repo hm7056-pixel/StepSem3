@@ -1,0 +1,85 @@
+import java.util.*;
+
+public class StopWordFilteredFrequencyReport {
+
+    static void printFilteredWordFrequency(String feedback) {
+
+        String cleanedText = feedback
+                .toLowerCase()
+                .replace(".", "")
+                .replace(",", "");
+
+        String[] words = cleanedText.trim().split("\\s+");
+
+        String[] stopWords = {
+                "the", "was", "and", "a", "is", "of", "in"
+        };
+
+        HashMap<String, Integer> frequencyMap =
+                new HashMap<>();
+
+        for (String word : words) {
+
+            if (word.isEmpty()) {
+                continue;
+            }
+
+            if (isStopWord(word, stopWords)) {
+                continue;
+            }
+
+            int currentCount =
+                    frequencyMap.getOrDefault(word, 0);
+
+            frequencyMap.put(word, currentCount + 1);
+        }
+
+        List<Map.Entry<String, Integer>> entries =
+                new ArrayList<>(frequencyMap.entrySet());
+
+        entries.sort(
+                (entry1, entry2) ->
+                        entry2.getValue()
+                                .compareTo(entry1.getValue())
+        );
+
+        System.out.println("\nWord Frequency Report:");
+
+        for (Map.Entry<String, Integer> entry : entries) {
+
+            System.out.println(
+                    entry.getKey() + ": " + entry.getValue()
+            );
+        }
+    }
+
+    static boolean isStopWord(
+            String word,
+            String[] stopWords) {
+
+        for (String stopWord : stopWords) {
+
+            if (word.equals(stopWord)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+
+        try {
+
+            System.out.print("Enter feedback paragraph: ");
+            String feedback = scanner.nextLine();
+
+            printFilteredWordFrequency(feedback);
+
+        } finally {
+            scanner.close();
+        }
+    }
+}
