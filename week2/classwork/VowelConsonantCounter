@@ -1,0 +1,47 @@
+import java.util.Scanner;
+
+public class VowelConsonantCounter {
+
+    static void countVowelsAndConsonants(String text) {
+
+        int vowelCount = 0;
+        int consonantCount = 0;
+
+        for (int i = 0; i < text.length(); i++) {
+
+            char character = text.charAt(i);
+            char lowerCharacter = Character.toLowerCase(character);
+
+            if (lowerCharacter == 'a' ||
+                lowerCharacter == 'e' ||
+                lowerCharacter == 'i' ||
+                lowerCharacter == 'o' ||
+                lowerCharacter == 'u') {
+
+                vowelCount++;
+
+            } else if (Character.isLetter(character)) {
+
+                consonantCount++;
+            }
+        }
+
+        System.out.println("Vowels: " + vowelCount
+                + " | Consonants: " + consonantCount);
+    }
+
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+
+        try {
+            System.out.print("Enter book title: ");
+            String text = scanner.nextLine();
+
+            countVowelsAndConsonants(text);
+
+        } finally {
+            scanner.close();
+        }
+    }
+}
