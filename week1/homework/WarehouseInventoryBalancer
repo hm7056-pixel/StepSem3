@@ -1,0 +1,132 @@
+import java.util.Scanner;
+
+public class WarehouseInventoryBalancer {
+
+    static void analyzeInventory(int[] sectionA, int[] sectionB) {
+
+        int sectionATotal = calculateTotal(sectionA);
+        int sectionBTotal = calculateTotal(sectionB);
+
+        String status;
+
+        if (sectionATotal == sectionBTotal) {
+            status = "Balanced";
+        } else {
+            status = "Not Balanced";
+        }
+
+        int highestQuantity = sectionA[0];
+        String highestSection = "Section A";
+        int highestIndex = 0;
+
+        // Check Section A
+        for (int i = 1; i < sectionA.length; i++) {
+
+            if (sectionA[i] > highestQuantity) {
+                highestQuantity = sectionA[i];
+                highestSection = "Section A";
+                highestIndex = i;
+            }
+        }
+
+        // Check Section B
+        for (int i = 0; i < sectionB.length; i++) {
+
+            if (sectionB[i] > highestQuantity) {
+                highestQuantity = sectionB[i];
+                highestSection = "Section B";
+                highestIndex = i;
+            }
+        }
+
+        System.out.println("\n========== INVENTORY REPORT ==========");
+        System.out.println("Section A Total: " + sectionATotal);
+        System.out.println("Section B Total: " + sectionBTotal);
+        System.out.println("Status: " + status);
+
+        System.out.println(
+                "Highest Quantity: "
+                + highestQuantity
+                + " ("
+                + highestSection
+                + ", Item "
+                + (highestIndex + 1)
+                + ")"
+        );
+    }
+
+    static int calculateTotal(int[] quantities) {
+
+        int total = 0;
+
+        for (int quantity : quantities) {
+            total += quantity;
+        }
+
+        return total;
+    }
+
+    static int[] readInventory(
+            Scanner scanner,
+            String sectionName,
+            int numberOfItems) {
+
+        int[] quantities = new int[numberOfItems];
+
+        System.out.println("\nEnter quantities for " + sectionName);
+
+        for (int i = 0; i < numberOfItems; i++) {
+
+            System.out.print(
+                    "Item " + (i + 1) + ": "
+            );
+
+            quantities[i] = scanner.nextInt();
+        }
+
+        return quantities;
+    }
+
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+
+        try {
+
+            System.out.print("Enter number of items: ");
+            int numberOfItems = scanner.nextInt();
+
+            if (numberOfItems <= 0) {
+                System.out.println(
+                        "Number of items must be positive."
+                );
+                return;
+            }
+
+            int[] sectionA =
+                    readInventory(
+                            scanner,
+                            "Section A",
+                            numberOfItems
+                    );
+
+            int[] sectionB =
+                    readInventory(
+                            scanner,
+                            "Section B",
+                            numberOfItems
+                    );
+
+            analyzeInventory(sectionA, sectionB);
+
+        } catch (java.util.InputMismatchException exception) {
+
+            System.out.println(
+                    "Invalid input. Please enter integers only."
+            );
+
+        } finally {
+            scanner.close();
+        }
+    }
+}
