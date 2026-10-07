@@ -1,0 +1,55 @@
+import java.util.Scanner;
+
+public class BestTimeToBuySellStock {
+
+    static int maxProfit(int[] prices) {
+
+        int lowestPrice = prices[0];
+        int maximumProfit = 0;
+
+        for (int i = 1; i < prices.length; i++) {
+
+            int currentProfit = prices[i] - lowestPrice;
+
+            if (currentProfit > maximumProfit) {
+                maximumProfit = currentProfit;
+            }
+
+            if (prices[i] < lowestPrice) {
+                lowestPrice = prices[i];
+            }
+        }
+
+        return maximumProfit;
+    }
+
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+
+        try {
+            System.out.print("Enter number of days: ");
+            int numberOfDays = scanner.nextInt();
+
+            if (numberOfDays <= 0) {
+                System.out.println("Number of days must be positive.");
+                return;
+            }
+
+            int[] prices = new int[numberOfDays];
+
+            System.out.println("Enter stock prices:");
+
+            for (int i = 0; i < prices.length; i++) {
+                prices[i] = scanner.nextInt();
+            }
+
+            int profit = maxProfit(prices);
+
+            System.out.println("Maximum Profit: " + profit);
+
+        } finally {
+            scanner.close();
+        }
+    }
+}
