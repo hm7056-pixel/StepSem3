@@ -1,0 +1,51 @@
+import java.util.Scanner;
+
+public class MaskedPhoneNumberFormatter {
+
+    static String maskPhoneNumber(String phone) {
+
+        String trimmedPhone = phone.trim();
+
+        if (trimmedPhone.length() != 10) {
+            return "Invalid phone number";
+        }
+
+        for (int i = 0; i < trimmedPhone.length(); i++) {
+
+            if (!Character.isDigit(trimmedPhone.charAt(i))) {
+                return "Invalid phone number";
+            }
+        }
+
+        String lastFourDigits =
+                trimmedPhone.substring(6);
+
+        StringBuilder maskedNumber = new StringBuilder("XXXXXX");
+
+        maskedNumber.insert(
+                maskedNumber.length(),
+                "-"
+        );
+
+        maskedNumber.append(lastFourDigits);
+
+        return maskedNumber.toString();
+    }
+
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+
+        try {
+            System.out.print("Enter phone number: ");
+            String phone = scanner.nextLine();
+
+            String maskedNumber = maskPhoneNumber(phone);
+
+            System.out.println(maskedNumber);
+
+        } finally {
+            scanner.close();
+        }
+    }
+}
