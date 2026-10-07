@@ -1,0 +1,109 @@
+import java.util.Scanner;
+
+public class MergeTwoSortedArrays {
+
+    static int[] mergeSortedArrays(int[] arr1, int[] arr2) {
+
+        int[] result = new int[arr1.length + arr2.length];
+
+        int firstIndex = 0;
+        int secondIndex = 0;
+        int resultIndex = 0;
+
+        while (firstIndex < arr1.length &&
+               secondIndex < arr2.length) {
+
+            if (arr1[firstIndex] <= arr2[secondIndex]) {
+
+                result[resultIndex] = arr1[firstIndex];
+
+                firstIndex++;
+
+            } else {
+
+                result[resultIndex] = arr2[secondIndex];
+
+                secondIndex++;
+            }
+
+            resultIndex++;
+        }
+
+        while (firstIndex < arr1.length) {
+
+            result[resultIndex] = arr1[firstIndex];
+
+            firstIndex++;
+            resultIndex++;
+        }
+
+        while (secondIndex < arr2.length) {
+
+            result[resultIndex] = arr2[secondIndex];
+
+            secondIndex++;
+            resultIndex++;
+        }
+
+        return result;
+    }
+
+    static void printArray(int[] array) {
+
+        System.out.print("Merged Array: ");
+
+        for (int i = 0; i < array.length; i++) {
+
+            System.out.print(array[i]);
+
+            if (i < array.length - 1) {
+                System.out.print(" ");
+            }
+        }
+
+        System.out.println();
+    }
+
+    static int[] readArray(
+            Scanner scanner,
+            String arrayName,
+            int size) {
+
+        int[] array = new int[size];
+
+        System.out.println("Enter elements for " + arrayName + ":");
+
+        for (int i = 0; i < array.length; i++) {
+            array[i] = scanner.nextInt();
+        }
+
+        return array;
+    }
+
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+
+        try {
+            System.out.print("Enter size of first array: ");
+            int firstSize = scanner.nextInt();
+
+            int[] arr1 =
+                    readArray(scanner, "Array 1", firstSize);
+
+            System.out.print("Enter size of second array: ");
+            int secondSize = scanner.nextInt();
+
+            int[] arr2 =
+                    readArray(scanner, "Array 2", secondSize);
+
+            int[] mergedArray =
+                    mergeSortedArrays(arr1, arr2);
+
+            printArray(mergedArray);
+
+        } finally {
+            scanner.close();
+        }
+    }
+}
